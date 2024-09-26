@@ -8,9 +8,8 @@ import torch
 
 def pipeline():
     snapshot = snapshot_download(repo_id="black-forest-labs/FLUX.1-schnell")
-    pipeline = FluxPipeline.from_pretrained(snapshot, torch_dtype=torch.bfloat16) #, text_encoder_2=None, text_encoder=None)
+    pipeline = FluxPipeline.from_pretrained(snapshot, torch_dtype=torch.bfloat16)
     pipeline.enable_sequential_cpu_offload()
-    # pipeline.enable_model_cpu_offload()
     return pipeline
 
 async def hello(request):

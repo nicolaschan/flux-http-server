@@ -34,7 +34,6 @@
 
         devShells.default = pkgs.mkShell {
           buildInputs = with pkgs; [
-            micromamba
             python311
             python311Packages.accelerate
             python311Packages.aiohttp
