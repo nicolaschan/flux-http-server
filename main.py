@@ -19,16 +19,19 @@ def query_param(request, param, default=None):
     value = request.query.get(param)
     return default if value is None else value
 
+def body_param(body, param, default=None):
+    return body.get(param, default)
+
 async def generate(request):
+    body = await request.json()
+
     seed = int(query_param(request, 'seed', 0))
-    prompt = query_param(request, 'prompt', 'text saying "no prompt"')
+    prompt = body_param(body, 'prompt', 'text saying "no prompt"')
     steps = int(query_param(request, 'steps', 4))
     max_sequence_length = int(query_param(request, 'max_sequence_length', 256))
 
     generator = torch.Generator("cuda").manual_seed(seed)
     args = {
-      # "prompt_embeds": prompt_embeds.bfloat16(),
-      # "pooled_prompt_embeds": pooled_prompt_embeds.bfloat16(),
       "prompt": [prompt],
       "guidance_scale": 0.0,
       "generator": generator,
@@ -54,7 +57,7 @@ async def main():
     app['pipe'] = pipe
     app.add_routes([
         web.get('/', hello),
-        web.get('/api/generate', generate)
+        web.post('/api/generate', generate)
     ])
     return app
 
