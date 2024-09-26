@@ -1,4 +1,4 @@
-# flux-http
+# Flux HTTP Server
 
 HTTP API for Flux image generation.
 
