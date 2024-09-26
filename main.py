@@ -30,7 +30,7 @@ async def generate(request):
     args = {
       # "prompt_embeds": prompt_embeds.bfloat16(),
       # "pooled_prompt_embeds": pooled_prompt_embeds.bfloat16(),
-      "prompt": [prompt] * 4,
+      "prompt": [prompt],
       "guidance_scale": 0.0,
       "generator": generator,
       "num_inference_steps": steps,
@@ -43,7 +43,7 @@ async def generate(request):
     }
     pipe = request.app['pipe']
     output = pipe(**args, **kwargs)
-    image = output.images[1]
+    image = output.images[0]
     png_output = BytesIO()
     image.save(png_output, format='PNG')
     png_data = png_output.getvalue()
