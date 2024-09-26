@@ -7,11 +7,12 @@ HTTP API for Flux image generation.
 Start the server
 
 ```bash
+docker build -t flux-http-server .
 docker run -it \
   -p 8080:8080 \
   -v $HOME/.cache/huggingface:/root/.cache/huggingface \
   --gpus all \
-  ghcr.io/nicolaschan/flux-http-server
+  flux-http-server
 ```
 
 Then generate an image
