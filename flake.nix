@@ -21,17 +21,7 @@
             cudaSupport = true;
           };
         };
-        pythonPackages = pkgs.python3Packages;
       in {
-        packages.default = pythonPackages.buildPythonApplication {
-          pname = "flux-api";
-          version = "0.1.0";
-          src = ./.;
-          propagatedBuildInputs = with pythonPackages; [
-            aiohttp
-          ];
-        };
-
         devShells.default = pkgs.mkShell {
           buildInputs = with pkgs; [
             python311
