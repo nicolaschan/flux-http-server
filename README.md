@@ -17,5 +17,6 @@ docker run -it \
 Then generate an image
 
 ```
-curl -d '{"prompt":"a sign saying hello world"}' localhost:8080/api/generate > generated.png
+curl -d '{"prompt":"a sign saying hello world"}' localhost:8080/api/batch > batch.json
+jq -r '.images[]' batch.json | sed 's/^data:image\/png;base64,//' | awk '{print $0 | "base64 -d > image-" NR ".png"}'
 ```
